@@ -1,0 +1,38 @@
+import keyboard
+import tkinter as tk
+
+# Definir una variable global que indica si el programa está ejecutando
+ejecutando = False
+
+# Intercambiar letras
+def reemplazar(teclaPresionada):
+    global ejecutando
+    if ejecutando and teclaPresionada.event_type == 'down' and teclaPresionada.name == 'a':
+        keyboard.send('backspace')
+        keyboard.write('o')
+    
+# Definir una función que inicia y detiene el programa
+def cambiar_estado():
+    global ejecutando
+    ejecutando = not ejecutando
+    if ejecutando:
+        keyboard.hook(reemplazar)
+    else:
+        keyboard.unhook_all()
+
+# Crear la ventana principal
+ventana = tk.Tk()
+ventana.title("Ejemplo Simple")
+
+# Crear y agregar widgets a la ventana
+etiqueta = tk.Label(ventana, text="Intercambiar teclas")
+etiqueta.pack(pady=10)
+
+boton_estado = tk.Button(ventana, text="Iniciar/Parar programa", command=cambiar_estado)
+boton_estado.pack(pady=10)
+
+# Agregar un atajo de teclado para cerrar la ventana con 'esc'
+keyboard.add_hotkey('esc', ventana.destroy)
+
+# Iniciar el bucle principal de la interfaz gráfica
+ventana.mainloop()
