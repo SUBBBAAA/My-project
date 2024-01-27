@@ -4,7 +4,7 @@ import tkinter as tk
 # Definir una variable global que indica si el programa está ejecutando
 ejecutando = False
 
-# Intercambiar letras
+# Definir una función que reemplaza 'a' con 'o'
 def reemplazar(teclaPresionada):
     global ejecutando
     if ejecutando and teclaPresionada.event_type == 'down' and teclaPresionada.name == 'a':
