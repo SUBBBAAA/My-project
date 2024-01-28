@@ -10,6 +10,8 @@ def reemplazar(teclaPresionada):
     if ejecutando and teclaPresionada.event_type == 'down' and teclaPresionada.name == 'a':
         keyboard.send('backspace')
         keyboard.write('o')
+    if ejecutando and teclaPresionada.event_type == 'down' and teclaPresionada.name == 'y':
+        keyboard.send('backspace')
     
 # Definir una función que inicia y detiene el programa
 def cambiar_estado():
@@ -19,17 +21,29 @@ def cambiar_estado():
         keyboard.hook(reemplazar)
     else:
         keyboard.unhook_all()
+    actualizar_etiqueta()
+    
 
 # Crear la ventana principal
 ventana = tk.Tk()
 ventana.title("Ejemplo Simple")
 
 # Crear y agregar widgets a la ventana
-etiqueta = tk.Label(ventana, text="Intercambiar teclas")
+
+etiqueta = tk.Label(ventana, text="Ajuste de teclas", font=("Arial", 24))
 etiqueta.pack(pady=10)
 
-boton_estado = tk.Button(ventana, text="Iniciar/Parar programa", command=cambiar_estado)
+boton_estado = tk.Button(ventana, text="Iniciar / Parar", command=cambiar_estado, font=("Arial", 12))
 boton_estado.pack(pady=10)
+
+# Crear y agregar widgets a la ventana
+estado = tk.Label(ventana, text="Programa no iniciado", font=("Arial", 12))
+estado.pack(pady=10)
+
+# Función para actualizar el texto de la etiqueta según el estado
+def actualizar_etiqueta():
+    texto_estado = "Estado = {}".format("Encendido" if ejecutando else "Apagado")
+    estado.config(text=texto_estado)
 
 # Agregar un atajo de teclado para cerrar la ventana con 'esc'
 keyboard.add_hotkey('esc', ventana.destroy)
